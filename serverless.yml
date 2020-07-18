@@ -19,6 +19,9 @@ provider:
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
+
 iamRoleStatements:
   - Effect: Allow
     Action:
