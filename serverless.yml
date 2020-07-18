@@ -16,6 +16,9 @@ provider:
   stage: dev
   region: us-east-2
 
+  environment:
+    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+
 iamRoleStatements:
   - Effect: Allow
     Action:
@@ -69,3 +72,11 @@ functions:
             method: delete
             cors: true
             authorizer: aws_iam
+  billing:
+    handler: billings.main
+    events:
+      - http:
+          path: billing
+          method: post
+          cors: true
+          authorizer: aws_iam
