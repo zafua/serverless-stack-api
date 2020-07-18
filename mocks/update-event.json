@@ -1,0 +1,11 @@
+{
+    "body": "{\"content\":\"tur world\",\"attachment\":\"zzz.jpg\"}",
+    "pathParameters": {
+      "id": "87a713a0-c903-11ea-a249-87eb3c9cbe4d"
+    },
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }
