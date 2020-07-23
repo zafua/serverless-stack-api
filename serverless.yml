@@ -1,7 +1,6 @@
-# NOTE: update this with your service name
-service: notes-app-api
 
-# Create an optimized package for our functions 
+service: notes-app-2-api
+
 package:
   individually: true
 
@@ -13,10 +12,15 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: prod
   region: us-east-2
+  stage: dev
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  tableName: ${self:custom.stage}-notes
 
   environment:
+    tableName: ${self:custom.tableName}
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
   iamRoleStatements:
@@ -29,10 +33,10 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-2:*:*"
-
-resources:
-  - ${file(resources/api-gateway-errors.yml)}
+      # Restrict our IAM role permissions to
+      # the specific table for the stage
+      Resource:
+        - "Fn::GetAtt": [ NotesTable, Arn ]
 
 functions:
   create:
@@ -83,3 +87,14 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
+  # S3
+  - ${file(resources/s3-bucket.yml)}
+  # Cognito
+  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-identity-pool.yml)}
