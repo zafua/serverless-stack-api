@@ -3,6 +3,7 @@ import db from "./libs/dynamodb-lib";
 
 export const main = handler(async (event, context) => {
 
+    console.log(process.env.tableName);
     const params = {
         TableName: process.env.tableName,
         KeyConditionExpression: "userId = :userId",
