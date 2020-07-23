@@ -20,7 +20,7 @@ custom:
   tableName: ${self:custom.stage}-notes
 
   environment:
-    tableName: ${self:custom.tableName}-notes
+    tableName: ${self:custom.tableName}
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
   iamRoleStatements:
