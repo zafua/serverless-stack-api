@@ -11,7 +11,7 @@ export default function handler(lambda) {
             statusCode = 200;
         } catch (e) {
             debug.flush(e);
-            
+
             body = e;
             statusCode = 500;
         }

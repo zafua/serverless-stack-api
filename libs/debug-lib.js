@@ -12,7 +12,7 @@ export default function debug() {
     });
 }
 
-export default function init(event, context) {
+export function init(event, context) {
     logs = [];
 
     debug("API event" , {
@@ -22,7 +22,7 @@ export default function init(event, context) {
     });
 }
 
-export function flush(e) {
-    logs.forEach(({date,string}) => console.debug(date,string));
+export function flush(e) {
+    logs.forEach(({ date, string }) => console.debug(date, string));
     console.error(e);
 }
